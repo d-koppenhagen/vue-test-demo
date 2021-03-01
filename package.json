@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
+    "test:snapshot": "TEST_MODE=snapshot vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "clear-jest-cache": "./node_modules/jest/bin/jest.js --clearCache"
@@ -45,7 +46,7 @@
       {
         "files": [
           "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+          "**/tests/{unit,snapshot}/**/*.spec.{j,t}s?(x)"
         ],
         "env": {
           "jest": true
