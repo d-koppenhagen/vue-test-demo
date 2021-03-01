@@ -6,6 +6,9 @@ switch (TEST_MODE) {
   case 'snapshot':
     testMatch = ['<rootDir>/tests/snapshot/**/*.spec.[tj]s?(x)'];
     break;
+  case 'visual':
+    testMatch = ['<rootDir>/tests/visual/**/*.spec.[tj]s?(x)'];
+    break;
   default:
     testMatch = ['<rootDir>/tests/unit/**/*.spec.[tj]s?(x)'];
     break;
@@ -16,5 +19,6 @@ module.exports = {
   testMatch,
   transform: {
     '^.+\\.vue$': 'vue-jest'
-  }
+  },
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
 }

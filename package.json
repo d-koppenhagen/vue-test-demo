@@ -7,6 +7,7 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:snapshot": "TEST_MODE=snapshot vue-cli-service test:unit",
+    "test:visual": "TEST_MODE=visual vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "clear-jest-cache": "./node_modules/jest/bin/jest.js --clearCache"
@@ -26,6 +27,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
+    "jest-image-snapshot": "^4.4.0",
+    "puppeteer": "^8.0.0",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
   },
@@ -46,7 +49,7 @@
       {
         "files": [
           "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/{unit,snapshot}/**/*.spec.{j,t}s?(x)"
+          "**/tests/{unit,snapshot,visual}/**/*.spec.{j,t}s?(x)"
         ],
         "env": {
           "jest": true
