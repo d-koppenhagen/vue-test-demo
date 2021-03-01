@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "clear-jest-cache": "./node_modules/jest/bin/jest.js --clearCache"
   },
   "dependencies": {
     "core-js": "^3.6.5",
