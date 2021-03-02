@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    ports:
+      - "8080:80"
+    build:
+      context: .
+      args:
+        - NODE_ENV=local
+      dockerfile: Dockerfile
+  storybook:
+    ports:
+      - "6006:80"
+    build:
+      context: .
+      args:
+        - NODE_ENV=local
+      dockerfile: Dockerfile.storybook
