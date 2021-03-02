@@ -10,13 +10,20 @@
     "test:visual": "TEST_MODE=visual vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "clear-jest-cache": "./node_modules/jest/bin/jest.js --clearCache"
+    "clear-jest-cache": "./node_modules/jest/bin/jest.js --clearCache",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@storybook/addon-actions": "^6.2.0-beta.5",
+    "@storybook/addon-essentials": "^6.2.0-beta.5",
+    "@storybook/addon-links": "^6.2.0-beta.5",
+    "@storybook/vue3": "^6.2.0-beta.5",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "^4.5.11",
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -25,12 +32,14 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
     "jest-image-snapshot": "^4.4.0",
     "puppeteer": "^8.0.0",
     "typescript": "~3.9.3",
-    "vue-jest": "^5.0.0-0"
+    "vue-jest": "^5.0.0-0",
+    "vue-loader": "^16.1.2"
   },
   "eslintConfig": {
     "root": true,
