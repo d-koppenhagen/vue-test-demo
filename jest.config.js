@@ -9,6 +9,9 @@ switch (TEST_MODE) {
   case 'visual':
     testMatch = ['<rootDir>/tests/visual/**/*.spec.[tj]s?(x)'];
     break;
+  case 'storybook':
+    testMatch = ['<rootDir>/tests/storybook/**/*.spec.[tj]s?(x)'];
+    break;
   default:
     testMatch = ['<rootDir>/tests/unit/**/*.spec.[tj]s?(x)'];
     break;
