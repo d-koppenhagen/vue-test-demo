@@ -1,0 +1,119 @@
+image: node:latest
+
+stages:
+  - install
+  - build
+  - test
+  - deploy
+
+# to cache both npm modules and Cypress binary we use environment variables
+# to point at the folders we can list as paths in "cache" job settings
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+# cache using branch name
+# https://gitlab.com/help/ci/caching/index.md
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+    - cache/Cypress
+    - node_modules
+
+# installation stage
+install_dependencies:
+  stage: install
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+
+# build stage
+build_app:
+  stage: build
+  needs: ["install_dependencies"]
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist
+    expire_in: 1 week
+    when: always
+
+build_storybook:
+  stage: build
+  needs: ["install_dependencies"]
+  script:
+    - npm run build-storybook
+  artifacts:
+    paths:
+      - storybook-static
+    expire_in: 1 week
+    when: always
+
+# testing stage
+test_unit:
+  stage: test
+  needs: ["install_dependencies"]
+  script: npm run test:unit
+
+test_snapshot:
+  stage: test
+  needs: ["install_dependencies"]
+  script: npm run test:snapshot
+  artifacts:
+    paths:
+      - tests/snapshot/__snapshots__
+    expire_in: 1 week
+    when: on_failure
+
+test_storybook:
+  stage: test
+  needs: ["install_dependencies"]
+  script: npm run test:storybook:ci
+  artifacts:
+    paths:
+      - tests/storybook/__image_snapshots__
+    expire_in: 1 week
+    when: on_failure
+
+test_visual:
+  stage: test
+  needs: ["install_dependencies"]
+  script: npm run test:visual:ci
+  artifacts:
+    paths:
+      - tests/visual/__image_snapshots__
+    expire_in: 1 week
+    when: on_failure
+
+test_e2e:
+  stage: test
+  needs: ["install_dependencies"]
+  script:
+      - apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+      - npm run test:e2e -- --headless
+  artifacts:
+    paths:
+      - tests/e2e/videos
+      - tests/e2e/screenshots
+    expire_in: 1 week
+    when: on_failure
+
+# deploy to GitLab Pages
+pages: # the job must be named pages
+  stage: deploy
+  needs: ["install_dependencies"]
+  script:
+    - npm run build --prod
+    - mv public public-vue # GitLab Pages hooks on the public folder
+    - mv dist public # rename the dist folder (result of npm run build)
+    # optionally, you can activate gzip support with the following line:
+    - find public -type f -regex '.*\.\(htm\|html\|txt\|text\|js\|css\)$' -exec gzip -f -k {} \;
+  artifacts:
+    paths:
+      - public # artifact path must be /public for GitLab Pages to pick it up
+  only:
+    - master

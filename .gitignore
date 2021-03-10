@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # static storybook build
 storybook-static
+
+# ignore recorded e2e-test videos
+tests/e2e/videos

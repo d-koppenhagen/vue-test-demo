@@ -8,7 +8,9 @@
     "test:unit": "vue-cli-service test:unit",
     "test:snapshot": "TEST_MODE=snapshot vue-cli-service test:unit",
     "test:storybook": "TEST_MODE=storybook vue-cli-service test:unit",
+    "test:storybook:ci": "concurrently -k -s first -n \"Storybook,Tests\" -c \"blue,magenta\" \"npm run storybook -- --ci --quiet\" \"wait-on http://localhost:6006 && npm run test:storybook\"",
     "test:visual": "TEST_MODE=visual vue-cli-service test:unit",
+    "test:visual:ci": "concurrently -k -s first -n \"App,Tests\" -c \"blue,magenta\" \"npm run serve\" \"wait-on http://localhost:8080 && npm run test:visual\"",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "clear-jest-cache": "./node_modules/jest/bin/jest.js --clearCache",
@@ -36,6 +38,7 @@
     "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
+    "concurrently": "^6.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
     "jest": "^26.6.3",
@@ -43,7 +46,8 @@
     "puppeteer": "^8.0.0",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0",
-    "vue-loader": "^16.1.2"
+    "vue-loader": "^16.1.2",
+    "wait-on": "^5.2.1"
   },
   "eslintConfig": {
     "root": true,
